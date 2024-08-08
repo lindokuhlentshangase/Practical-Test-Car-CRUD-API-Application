@@ -1,0 +1,15 @@
+GET https://bootcamp.projectcodex.co/cars.json
+###
+GET http://localhost:3005/api/most-popular-cars
+###
+DELETE http://localhost:3005/api/cars/{reg_number} HTTP/1.1
+###
+POST http://localhost:3005/api/cars HTTP/1.1
+Content-Type: application/json
+
+{
+        "color": "orange",
+        "make": "Toyota",
+        "model": "Hilux",
+        "reg_number": "CY 52435"
+    }

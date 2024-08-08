@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Most Popular Car Model</title>
+    <style>
+        body {
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: beige;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-top: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            input {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 1em;
+            }
+
+            button {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+
+            input {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Find the Most Popular Car Model</h1>
+        <button id="fetchPopularCar">Get Most Popular Car Model</button>
+        <div id="carResult" class="result"></div>
+    </div>
+
+    <div class="container">
+        <h2>Add Car</h2>
+        <form id="addCarForm">
+            <input id="color" type="text" placeholder="Color" required>
+            <input id="model" type="text" placeholder="Model" required>
+            <input id="make" type="text" placeholder="Make" required>
+            <input id="reg_number" type="text" placeholder="Registration Number" required>
+            <button type="submit">Add Car</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h2>Remove Car</h2>
+        <form id="removeCarForm">
+            <input id="reg_numberToRemove" type="text" placeholder="Registration Number" required>
+            <button type="submit">Remove Car</button>
+        </form>
+    </div>
+
+    <script>
+        let cars = [
+            { color: 'blue', model: 'Model S', make: 'Tesla', reg_number: 'ABC123' },
+            { color: 'red', model: 'Model 3', make: 'Tesla', reg_number: 'DEF456' },
+            { color: 'blue', model: 'Model S', make: 'Tesla', reg_number: 'GHI789' },
+            { color: 'black', model: 'Civic', make: 'Honda', reg_number: 'JKL012' },
+        ];
+
+        document.getElementById('fetchPopularCar').addEventListener('click', () => {
+            const carPopularity = {};
+            cars.forEach(car => {
+                const key = `${car.make}-${car.model}`;
+                carPopularity[key] = (carPopularity[key] || 0) + 1;
+            });
+            const mostPopularCar = Object.keys(carPopularity).reduce((a, b) => carPopularity[a] > carPopularity[b] ? a : b);
+            document.getElementById('carResult').innerText = `Most Popular Car Model: ${mostPopularCar}`;
+        });
+
+        document.getElementById('addCarForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const color = document.getElementById('color').value;
+            const model = document.getElementById('model').value;
+            const make = document.getElementById('make').value;
+            const reg_number = document.getElementById('reg_number').value;
+            cars.push({ color, model, make, reg_number });
+            alert('Car added successfully!');
+            event.target.reset();
+        });
+
+        document.getElementById('removeCarForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const reg_numberToRemove = document.getElementById('reg_numberToRemove').value;
+            cars = cars.filter(car => car.reg_number !== reg_numberToRemove);
+            alert('Car removed successfully!');
+            event.target.reset();
+        });
+    </script>
+</body>
+
+</html>
